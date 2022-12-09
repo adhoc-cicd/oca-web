@@ -2,13 +2,10 @@
 
 import BasicModel from "web.BasicModel";
 import {ComponentAdapter} from "web.OwlCompatibility";
-import {FieldMany2One} from "web.relational_fields";
 import FieldManagerMixin from "web.FieldManagerMixin";
+import {FieldMany2One} from "web.relational_fields";
 import {SelectCreateDialog} from "web.view_dialogs";
-
-const {Component} = owl;
-const {xml} = owl.tags;
-
+const {Component, xml} = owl;
 export const FakeMany2oneFieldWidget = FieldMany2One.extend(FieldManagerMixin, {
     /**
      * @override
@@ -55,6 +52,7 @@ export const FakeMany2oneFieldWidget = FieldMany2One.extend(FieldManagerMixin, {
      * Get record
      *
      * @param {BasicModel} model
+     * @returns {String}
      */
     _get_record: function (model) {
         return model.get(this.dataPointID);
