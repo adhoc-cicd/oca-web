@@ -2,12 +2,28 @@
 
 import BasicModel from "web.BasicModel";
 import {ComponentAdapter} from "web.OwlCompatibility";
-import {FieldMany2One} from "web.relational_fields";
+import {Dropdown} from "@web/core/dropdown/dropdown";
 import FieldManagerMixin from "web.FieldManagerMixin";
+import {FieldMany2One} from "web.relational_fields";
 import {SelectCreateDialog} from "web.view_dialogs";
+import {patch} from "@web/core/utils/patch";
 
-const {Component} = owl;
-const {xml} = owl.tags;
+const {Component, xml} = owl;
+
+patch(Dropdown.prototype, "dropdown", {
+    onWindowClicked(ev) {
+        // This patch is created to prevent the closing of the Filter menu
+        // when a selection is made in the RecordPicker
+        if (
+            $(ev.target.closest("ul.dropdown-menu")).attr("id") !== undefined &&
+            $(ev.target.closest("ul.dropdown-menu")).attr("id") ===
+                $("body > ul.dropdown-menu").attr("id")
+        ) {
+            return;
+        }
+        this._super(ev);
+    },
+});
 
 export const FakeMany2oneFieldWidget = FieldMany2One.extend(FieldManagerMixin, {
     /**
@@ -55,6 +71,7 @@ export const FakeMany2oneFieldWidget = FieldMany2One.extend(FieldManagerMixin, {
      * Get record
      *
      * @param {BasicModel} model
+     * @returns {String}
      */
     _get_record: function (model) {
         return model.get(this.dataPointID);
@@ -105,14 +122,20 @@ export const FakeMany2oneFieldWidget = FieldMany2One.extend(FieldManagerMixin, {
 });
 
 export class FakeMany2oneFieldWidgetAdapter extends ComponentAdapter {
-    setup() {
-        this.env = owl.Component.env;
+    constructor() {
+        super(...arguments);
+        this.env = Component.env;
     }
-    async updateWidget() {
-        /* eslint-disable no-empty-function */
+
+    renderWidget() {
+        this.widget._render();
     }
-    async renderWidget() {
-        /* eslint-disable no-empty-function */
+
+    get widgetArgs() {
+        if (this.props.widgetArgs) {
+            return this.props.widgetArgs;
+        }
+        return [this.props.attrs];
     }
 }
 

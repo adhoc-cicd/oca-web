@@ -1,9 +1,8 @@
 /** @odoo-module **/
 
-import {patch} from "@web/core/utils/patch";
-import FilterMenu from "web.FilterMenu";
 import AdvancedFilterItem from "./AdvancedFilterItem.esm";
-
+import FilterMenu from "web.FilterMenu";
+import {patch} from "@web/core/utils/patch";
 /**
  * Patches the FilterMenu for legacy widgets.
  *

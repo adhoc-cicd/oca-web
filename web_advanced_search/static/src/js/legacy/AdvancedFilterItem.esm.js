@@ -1,16 +1,12 @@
 /** @odoo-module **/
 
-import {getHumanDomain} from "../utils.esm";
-
-import config from "web.config";
-import DomainSelectorDialog from "web.DomainSelectorDialog";
 import Domain from "web.Domain";
+import DomainSelectorDialog from "web.DomainSelectorDialog";
+import config from "web.config";
+import {getHumanDomain} from "../utils.esm";
 import {useModel} from "web.Model";
-
-const {Component, hooks} = owl;
-const {useRef} = hooks;
-
-export default class AdvancedFilterItem extends Component {
+const {Component, useRef} = owl;
+class AdvancedFilterItem extends Component {
     setup() {
         this.itemRef = useRef("dropdown-item");
         this.model = useModel("searchModel");
@@ -65,4 +61,7 @@ export default class AdvancedFilterItem extends Component {
     }
 }
 
+AdvancedFilterItem.components = {AdvancedFilterItem};
+
 AdvancedFilterItem.template = "web_advanced_search.AdvancedFilterItem";
+export default AdvancedFilterItem;
