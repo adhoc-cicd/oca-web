@@ -1,8 +1,8 @@
 /** @odoo-module **/
 
-import {patch} from "@web/core/utils/patch";
 import {CustomFilterItem} from "@web/search/filter_menu/custom_filter_item";
 import {RecordPicker} from "../RecordPicker.esm";
+import {patch} from "@web/core/utils/patch";
 
 /**
  * Patches the CustomFilterItem for owl widgets.
