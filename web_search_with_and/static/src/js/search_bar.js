@@ -23,12 +23,13 @@ odoo.define("web_search_with_and/static/src/js/search_bar.js", function (require
                     source,
                     this.isShiftKey
                 );
+                debugger;
                 this.model.dispatch("addAutoCompletionValues", {
                     filterId: source.filterId,
                     value:
                         "value" in source
                             ? source.value
-                            : this._parseWithSource(labelValue, source).trim(),
+                            : this._parseWithSource(labelValue.trim(), source),
                     label: labelValue.trim(),
                     operator: source.filterOperator || source.operator,
                     isShiftKey: this.isShiftKey,
